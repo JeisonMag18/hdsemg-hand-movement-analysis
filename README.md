@@ -59,3 +59,44 @@ Kinematic validation:
 
 IA753 — Análise de Sinais Biológicos  
 FEEC — Universidade Estadual de Campinas
+## Main Results
+
+### Temporal analysis — RMS
+
+The RMS amplitude differed significantly among the eight hand-movement tasks
+for both EDC and FDS.
+
+![EDC RMS](results/figures/01_rms_edc_normalized_by_task.png)
+
+![FDS RMS](results/figures/02_rms_fds_normalized_by_task.png)
+
+Increasing the movement frequency from 0.50 to 0.75 Hz significantly increased
+RMS in all eight tasks for both muscles.
+
+### Spectral analysis — Median Frequency
+
+Power spectral density was estimated using Welch's method. Median frequency
+was then extracted from the HD-sEMG spectrum.
+
+![EDC median frequency](results/figures/03_fmed_edc_by_task.png)
+
+![FDS median frequency](results/figures/04_fmed_fds_by_task.png)
+
+The strongest task-related effect was observed in the FDS:
+
+- 0.50 Hz: Kendall's W = 0.590
+- 0.75 Hz: Kendall's W = 0.661
+
+This indicates that FDS median frequency was particularly sensitive to the
+motor task performed.
+
+### Kinematic validation
+
+![Kinematic validation](results/figures/05_kinematic_frequency_validation.png)
+
+The dominant kinematic frequency was:
+
+- 0.491 Hz for the nominal 0.50 Hz condition
+- 0.736 Hz for the nominal 0.75 Hz condition
+
+Only 5 of 1007 recordings showed an absolute deviation greater than 0.10 Hz.
