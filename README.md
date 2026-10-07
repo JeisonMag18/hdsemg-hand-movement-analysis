@@ -1,165 +1,144 @@
-﻿# HD-sEMG Hand Movement Analysis
+﻿# AnÃ¡lise de Movimentos da MÃ£o com HD-sEMG
 
-Temporal, spectral and spatial analysis of high-density surface electromyography
-(HD-sEMG) during hand movements, with emphasis on features that may support
-future estimation of motor intention for myoelectric prosthetic control.
+AnÃ¡lise temporal, espectral e espacial de sinais de eletromiografia de superfÃ­cie de alta densidade (HD-sEMG) durante movimentos da mÃ£o, com foco em caracterÃ­sticas que possam futuramente contribuir para a estimativa da intenÃ§Ã£o motora e o controle de prÃ³teses mioelÃ©tricas.
 
-## Motivation
+## MotivaÃ§Ã£o
 
-Myoelectric prosthetic devices rely on residual muscle activity to infer the
-movement intended by the user.
+PrÃ³teses mioelÃ©tricas utilizam a atividade muscular residual para inferir a intenÃ§Ã£o de movimento do usuÃ¡rio.
 
-Different hand movements can produce partially overlapping activation patterns
-in forearm muscles. HD-sEMG provides multiple spatial channels and therefore
-allows the analysis of temporal, spectral and spatial characteristics that may
-help distinguish motor tasks.
+Diferentes movimentos da mÃ£o podem produzir padrÃµes de ativaÃ§Ã£o parcialmente sobrepostos nos mÃºsculos do antebraÃ§o. O HD-sEMG permite observar essa atividade em mÃºltiplos canais e, portanto, investigar caracterÃ­sticas temporais, espectrais e espaciais que podem ajudar a diferenciar tarefas motoras.
 
-The long-term goal is to investigate whether these characteristics can support
-movement classification or continuous estimation of hand kinematics.
+O objetivo de longo prazo deste projeto Ã© investigar se essas caracterÃ­sticas podem ser utilizadas para estimar movimentos da mÃ£o ou parÃ¢metros cinemÃ¡ticos relacionados ao movimento.
 
-The present stage focuses first on signal characterization: before training a
-movement estimator, we investigate whether the HD-sEMG features change
-systematically with the performed task and movement speed.
+Nesta primeira etapa, o foco estÃ¡ na caracterizaÃ§Ã£o dos sinais: antes de treinar um estimador de movimento, buscamos verificar se as caracterÃ­sticas do HD-sEMG variam de forma sistemÃ¡tica com a tarefa realizada e com a velocidade de execuÃ§Ã£o.
 
-## Research question
+## Pergunta de pesquisa
 
-> Which temporal, spectral and spatial characteristics of HD-sEMG signals are
-> most sensitive to different hand movements, and how are these activation
-> patterns related to hand kinematics?
+> Quais caracterÃ­sticas temporais, espectrais e espaciais dos sinais HD-sEMG apresentam maior sensibilidade aos diferentes movimentos da mÃ£o, e como esses padrÃµes de ativaÃ§Ã£o se relacionam com a cinemÃ¡tica?
 
-## Working hypothesis
+## HipÃ³tese de trabalho
 
-Different hand movements and execution speeds produce distinct recruitment
-patterns in the Extensor Digitorum Communis (EDC) and Flexor Digitorum
-Superficialis (FDS). These differences should be observable in:
+Diferentes movimentos e velocidades de execuÃ§Ã£o produzem padrÃµes distintos de recrutamento dos mÃºsculos Extensor Digitorum Communis (EDC) e Flexor Digitorum Superficialis (FDS).
 
-- temporal amplitude;
-- spectral content;
-- spatial distribution across HD-sEMG channels.
+Essas diferenÃ§as podem aparecer em:
 
-These features may later be used as inputs to movement-intention estimators.
+- amplitude temporal;
+- conteÃºdo espectral;
+- distribuiÃ§Ã£o espacial da atividade nos canais de HD-sEMG.
 
-## Dataset
+Essas caracterÃ­sticas poderÃ£o futuramente ser utilizadas como entrada para estimadores de intenÃ§Ã£o motora.
 
-The project uses the public dataset:
+## Base de dados
 
-**HD sEMG of Forearm Muscles and 3D Hand Kinematics During
-Sinusoidally-Modulated Finger Movements and Grasping Tasks**
+O projeto utiliza a base pÃºblica:
+
+**HD sEMG of Forearm Muscles and 3D Hand Kinematics During Sinusoidally-Modulated Finger Movements and Grasping Tasks**
 
 DOI: `10.6084/m9.figshare.31032934`
 
-Main characteristics:
+Principais caracterÃ­sticas:
 
-- 21 healthy participants;
-- 8 hand-movement tasks;
-- 2 execution frequencies: 0.50 Hz and 0.75 Hz;
-- 3 repetitions per task/frequency condition;
-- 1007 valid movement recordings;
-- 128 HD-sEMG channels:
-  - channels 1â€“64: EDC;
-  - channels 65â€“128: FDS;
-- HD-sEMG sampling frequency: 2052.52 Hz;
-- hand kinematics sampling frequency: 100 Hz.
+- 21 participantes saudÃ¡veis;
+- 8 tarefas motoras da mÃ£o;
+- 2 frequÃªncias de execuÃ§Ã£o: 0,50 Hz e 0,75 Hz;
+- 3 repetiÃ§Ãµes por condiÃ§Ã£o;
+- 1007 gravaÃ§Ãµes vÃ¡lidas de movimento;
+- 128 canais de HD-sEMG:
+  - canais 1â€“64: EDC;
+  - canais 65â€“128: FDS;
+- frequÃªncia de amostragem do HD-sEMG: 2052,52 Hz;
+- frequÃªncia de amostragem da cinemÃ¡tica: 100 Hz.
 
-The eight tasks are:
+As oito tarefas sÃ£o:
 
-1. Index finger flexion-extension;
-2. Middle finger flexion-extension;
-3. Coupled ring-little finger flexion-extension;
-4. Thumb opposition-reposition;
-5. Index-thumb pinch;
-6. Middle-thumb pinch;
-7. Tripod pinch;
-8. Five-finger opening-closing.
+1. flexÃ£o-extensÃ£o do dedo indicador;
+2. flexÃ£o-extensÃ£o do dedo mÃ©dio;
+3. flexÃ£o-extensÃ£o acoplada dos dedos anelar e mÃ­nimo;
+4. oposiÃ§Ã£o-reposiÃ§Ã£o do polegar;
+5. pinÃ§a indicador-polegar;
+6. pinÃ§a mÃ©dio-polegar;
+7. pinÃ§a trÃ­pode;
+8. abertura e fechamento dos cinco dedos.
 
-The 0.50 Hz and 0.75 Hz movement frequencies are part of the original
-experimental protocol. Participants followed a sinusoidal visual reference.
+As frequÃªncias de 0,50 Hz e 0,75 Hz fazem parte do protocolo experimental original. Os participantes seguiam uma referÃªncia visual sinusoidal.
 
-Therefore:
+Assim:
 
-- 0.50 Hz corresponds to one complete movement cycle every 2 s;
-- 0.75 Hz corresponds to one complete movement cycle every ~1.33 s.
+- 0,50 Hz corresponde a um ciclo completo de movimento a cada 2 s;
+- 0,75 Hz corresponde a um ciclo completo aproximadamente a cada 1,33 s.
 
-## Why analyze two movement speeds?
+## Por que analisar duas velocidades?
 
-The same task is available at two execution speeds.
+A mesma tarefa estÃ¡ disponÃ­vel em duas velocidades de execuÃ§Ã£o.
 
-This is useful for movement-intention analysis because a future prosthetic
-controller should ideally recognize the same intended movement even when the
-user performs it faster or slower.
+Isso Ã© importante para estudos de intenÃ§Ã£o motora porque um futuro controlador de prÃ³tese deve idealmente reconhecer o mesmo movimento mesmo quando o usuÃ¡rio o executa mais rÃ¡pido ou mais devagar.
 
-The two-speed protocol allows us to investigate whether a feature is mainly
-related to the task itself or strongly influenced by execution speed.
+A comparaÃ§Ã£o entre 0,50 Hz e 0,75 Hz permite verificar se uma caracterÃ­stica estÃ¡ associada principalmente ao tipo de movimento ou se Ã© fortemente influenciada pela velocidade.
 
-## Signal-processing pipeline
+## Fluxo de processamento dos sinais
 
 ```text
-Raw HD-sEMG + hand kinematics
-              |
-              v
-        5â€“40 s interval
-              |
-              v
-20 Hz high-pass Butterworth filter
-              |
-              v
-      +-------------------+
-      |                   |
-      v                   v
-Temporal analysis    Spectral analysis
-RMS, 100 ms          Welch PSD
-                     Median frequency
-      |                   |
-      +---------+---------+
-                |
-                v
-          EDC and FDS
-                |
-                v
-    8 tasks Ã— 2 movement speeds
-                |
-                v
-Repeated-measures statistical analysis
+HD-sEMG bruto + cinemÃ¡tica
+             |
+             v
+       Intervalo 5â€“40 s
+             |
+             v
+Filtro passa-altas Butterworth de 20 Hz
+             |
+             v
+     +-------------------+
+     |                   |
+     v                   v
+AnÃ¡lise temporal     AnÃ¡lise espectral
+RMS, 100 ms          PSD por Welch
+                     FrequÃªncia mediana
+     |                   |
+     +---------+---------+
+               |
+               v
+          EDC e FDS
+               |
+               v
+    8 tarefas Ã— 2 velocidades
+               |
+               v
+AnÃ¡lise estatÃ­stica de medidas repetidas
 ```
 
-## Why these processing choices?
+## Justificativa das escolhas de processamento
 
-The preprocessing parameters were not selected arbitrarily.
+As escolhas de prÃ©-processamento nÃ£o foram arbitrÃ¡rias.
 
-Exploratory analyses were used to study:
+Foram realizadas anÃ¡lises exploratÃ³rias para avaliar:
 
-- low-frequency content in the raw HD-sEMG;
-- possible 60 Hz interference;
-- high-pass cutoffs of 5, 10 and 20 Hz;
-- RMS windows of 50, 100, 150 and 200 ms.
+- conteÃºdo de baixa frequÃªncia no HD-sEMG bruto;
+- possÃ­vel interferÃªncia em 60 Hz;
+- filtros passa-altas com cortes de 5, 10 e 20 Hz;
+- janelas RMS de 50, 100, 150 e 200 ms.
 
-A 20 Hz high-pass filter was selected because it strongly reduced the
-low-frequency contribution while preserving almost all power in the relevant
-EMG band.
+O filtro passa-altas de 20 Hz foi selecionado por reduzir fortemente o conteÃºdo de baixa frequÃªncia e preservar praticamente toda a potÃªncia na principal banda de interesse do EMG acima da regiÃ£o de transiÃ§Ã£o do filtro.
 
-A 100 ms RMS window was selected as a compromise between temporal smoothness
-and temporal resolution.
+A janela RMS de 100 ms foi escolhida como compromisso entre suavizaÃ§Ã£o e resoluÃ§Ã£o temporal.
 
-More details are provided in
-[`docs/analysis_decisions.md`](docs/analysis_decisions.md).
+Mais detalhes estÃ£o disponÃ­veis em:
 
-## Mandatory signal-analysis technique: power spectral density
+[`docs/analysis_decisions.md`](docs/analysis_decisions.md)
 
-The main spectral-analysis technique is the power spectral density (PSD)
-estimated using Welch's method.
+## TÃ©cnica principal de anÃ¡lise de sinais: densidade espectral de potÃªncia
 
-Conceptually, Welch's estimator averages modified periodograms computed from
-overlapping signal segments:
+A principal tÃ©cnica espectral utilizada Ã© a densidade espectral de potÃªncia (PSD) estimada pelo mÃ©todo de Welch.
+
+Conceitualmente, o mÃ©todo de Welch calcula periodogramas em segmentos sobrepostos do sinal e realiza a mÃ©dia desses espectros:
 
 \[
 \hat{S}_{xx}(f) =
 \frac{1}{K}\sum_{k=1}^{K} P_k(f)
 \]
 
-where \(P_k(f)\) is the periodogram of segment \(k\).
+em que \(P_k(f)\) representa o periodograma do segmento \(k\).
 
-The median frequency is then obtained from the PSD as the frequency that
-divides the spectral power into two equal parts:
+A partir da PSD Ã© calculada a frequÃªncia mediana, definida como a frequÃªncia que divide a potÃªncia espectral em duas partes iguais:
 
 \[
 \int_{f_{\min}}^{f_{\mathrm{med}}} S_{xx}(f)\,df
@@ -168,9 +147,9 @@ divides the spectral power into two equal parts:
 \int_{f_{\min}}^{f_{\max}} S_{xx}(f)\,df
 \]
 
-## Temporal analysis: RMS
+## AnÃ¡lise temporal: RMS
 
-Muscle activation amplitude is characterized with a sliding RMS:
+A amplitude da ativaÃ§Ã£o muscular Ã© caracterizada utilizando RMS mÃ³vel com janela de 100 ms:
 
 \[
 RMS[n] =
@@ -180,155 +159,146 @@ RMS[n] =
 }
 \]
 
-A 100 ms window is used.
+O RMS Ã© utilizado como descritor temporal complementar.
 
-RMS is treated as a complementary temporal descriptor; the mandatory spectral
-analysis remains the Welch PSD.
+## Desenho estatÃ­stico
 
-## Statistical design
+A unidade experimental Ã© o participante, e nÃ£o cada gravaÃ§Ã£o individual.
 
-The experimental unit is the participant, not the individual recording.
+As trÃªs repetiÃ§Ãµes sÃ£o inicialmente agrupadas dentro de cada participante, tarefa e frequÃªncia de execuÃ§Ã£o.
 
-The three repetitions are first averaged within each participant and
-task-frequency condition.
+Em seguida sÃ£o utilizados:
 
-The following repeated-measures analyses are then used:
+- teste de Friedman para comparaÃ§Ã£o entre as oito tarefas;
+- Kendall's W como medida de tamanho de efeito;
+- teste pareado de Wilcoxon para comparar 0,50 Hz e 0,75 Hz;
+- correÃ§Ã£o de Holm para mÃºltiplas comparaÃ§Ãµes.
 
-- Friedman test: comparison among the eight tasks;
-- Kendall's W: effect size;
-- paired Wilcoxon test: comparison between 0.50 and 0.75 Hz;
-- Holm correction: multiple paired comparisons.
+# Progresso do projeto â€” Etapa 1
 
-# Project progress â€” Milestone 1
+## 1. ValidaÃ§Ã£o cinemÃ¡tica
 
-## 1. Kinematic validation
+Antes de interpretar o HD-sEMG, os sinais de cinemÃ¡tica foram utilizados para verificar se os participantes realmente executaram os movimentos prÃ³ximos Ã s frequÃªncias definidas pelo protocolo.
 
-Before interpreting the HD-sEMG, the kinematic signals were used to verify
-whether participants actually followed the nominal execution frequencies.
-
-| Nominal frequency | Mean observed dominant frequency |
+| FrequÃªncia nominal | FrequÃªncia dominante mÃ©dia observada |
 |---:|---:|
-| 0.50 Hz | 0.491 Hz |
-| 0.75 Hz | 0.736 Hz |
+| 0,50 Hz | 0,491 Hz |
+| 0,75 Hz | 0,736 Hz |
 
-Only 5 of 1007 recordings showed an absolute deviation greater than 0.10 Hz
-from the nominal frequency.
+Apenas 5 das 1007 gravaÃ§Ãµes apresentaram desvio absoluto superior a 0,10 Hz em relaÃ§Ã£o Ã  frequÃªncia nominal.
 
-![Kinematic validation](results/figures/05_kinematic_frequency_validation.png)
+![ValidaÃ§Ã£o cinemÃ¡tica](results/figures/05_kinematic_frequency_validation.png)
 
-## 2. Temporal results â€” RMS
+Esse resultado indica boa consistÃªncia do protocolo experimental.
 
-RMS differed significantly among the eight tasks for both EDC and FDS.
+## 2. Resultados temporais â€” RMS
 
-![EDC RMS](results/figures/01_rms_edc_normalized_by_task.png)
+O RMS apresentou diferenÃ§as significativas entre as oito tarefas tanto para EDC quanto para FDS.
 
-![FDS RMS](results/figures/02_rms_fds_normalized_by_task.png)
+![RMS EDC](results/figures/01_rms_edc_normalized_by_task.png)
 
-Task-related effect sizes:
+![RMS FDS](results/figures/02_rms_fds_normalized_by_task.png)
 
-| Signal | Speed | Kendall's W |
+Tamanhos de efeito relacionados Ã  tarefa:
+
+| Sinal | Velocidade | Kendall's W |
 |---|---:|---:|
-| EDC RMS | 0.50 Hz | 0.271 |
-| EDC RMS | 0.75 Hz | 0.268 |
-| FDS RMS | 0.50 Hz | 0.262 |
-| FDS RMS | 0.75 Hz | 0.277 |
+| RMS EDC | 0,50 Hz | 0,271 |
+| RMS EDC | 0,75 Hz | 0,268 |
+| RMS FDS | 0,50 Hz | 0,262 |
+| RMS FDS | 0,75 Hz | 0,277 |
 
-Paired comparisons also showed that RMS increased significantly at 0.75 Hz
-relative to 0.50 Hz for all eight tasks in both muscles.
+As comparaÃ§Ãµes pareadas tambÃ©m mostraram aumento significativo do RMS em 0,75 Hz em relaÃ§Ã£o a 0,50 Hz para as oito tarefas, tanto no EDC quanto no FDS.
 
-### Interpretation
+### InterpretaÃ§Ã£o
 
-Different tasks require different levels and patterns of activation in EDC and
-FDS.
+Diferentes tarefas exigem nÃ­veis e padrÃµes distintos de ativaÃ§Ã£o muscular.
 
-However, RMS is also strongly influenced by execution speed. This is relevant
-for future prosthetic control because a movement estimator based only on
-amplitude could confuse task identity with movement speed.
+Entretanto, o RMS tambÃ©m Ã© influenciado pela velocidade de execuÃ§Ã£o. Isso Ã© relevante para uma futura aplicaÃ§Ã£o em prÃ³teses, pois um estimador baseado somente em amplitude poderia confundir o tipo de movimento com a velocidade com que ele Ã© executado.
 
-## 3. Spectral results â€” median frequency
+## 3. Resultados espectrais â€” frequÃªncia mediana
 
-PSD was estimated using Welch's method and median frequency was extracted from
-the spectrum.
+A PSD foi estimada pelo mÃ©todo de Welch e a frequÃªncia mediana foi extraÃ­da do espectro.
 
-![EDC median frequency](results/figures/03_fmed_edc_by_task.png)
+![FrequÃªncia mediana EDC](results/figures/03_fmed_edc_by_task.png)
 
-![FDS median frequency](results/figures/04_fmed_fds_by_task.png)
+![FrequÃªncia mediana FDS](results/figures/04_fmed_fds_by_task.png)
 
-Task-related effect sizes:
+Tamanhos de efeito:
 
-| Signal | Speed | Kendall's W |
+| Sinal | Velocidade | Kendall's W |
 |---|---:|---:|
-| EDC median frequency | 0.50 Hz | 0.283 |
-| EDC median frequency | 0.75 Hz | 0.330 |
-| FDS median frequency | 0.50 Hz | 0.590 |
-| FDS median frequency | 0.75 Hz | 0.661 |
+| FrequÃªncia mediana EDC | 0,50 Hz | 0,283 |
+| FrequÃªncia mediana EDC | 0,75 Hz | 0,330 |
+| FrequÃªncia mediana FDS | 0,50 Hz | 0,590 |
+| FrequÃªncia mediana FDS | 0,75 Hz | 0,661 |
 
-The strongest task-related effect was observed for the FDS median frequency.
+O maior efeito relacionado Ã  tarefa foi observado na frequÃªncia mediana do FDS.
 
-### Interpretation
+### InterpretaÃ§Ã£o
 
-The spectral distribution of FDS activity is particularly sensitive to the
-performed motor task.
+A distribuiÃ§Ã£o espectral da atividade do FDS apresentou forte sensibilidade ao tipo de tarefa executada.
 
-At this stage, this result indicates **task sensitivity**, not demonstrated
-classification performance.
+Nesta etapa, esse resultado deve ser interpretado como **sensibilidade Ã s diferenÃ§as entre tarefas**, e nÃ£o como desempenho comprovado de classificaÃ§Ã£o.
 
-## 4. Why this matters for movement estimation
+## 4. RelaÃ§Ã£o com estimativa de movimento
 
-The first milestone provides evidence that hand tasks are associated with
-measurable differences in temporal and spectral HD-sEMG characteristics.
+Os resultados desta primeira etapa indicam que diferentes movimentos da mÃ£o estÃ£o associados a diferenÃ§as mensurÃ¡veis nas caracterÃ­sticas temporais e espectrais do HD-sEMG.
 
-A future prosthetic-control pipeline may follow:
+Uma aplicaÃ§Ã£o futura para controle de prÃ³teses poderia seguir a estrutura:
 
 ```text
-Motor intention
+IntenÃ§Ã£o motora
       |
       v
-Forearm muscle activation
+AtivaÃ§Ã£o muscular do antebraÃ§o
       |
       v
 HD-sEMG
       |
       v
-Temporal + spectral + spatial features
+CaracterÃ­sticas temporais + espectrais + espaciais
       |
       v
-Movement estimator
+Estimador de movimento
       |
       v
-Predicted movement / prosthetic command
+Movimento previsto / comando para prÃ³tese
 ```
 
-This project does not yet claim to provide a complete prosthetic controller.
+O projeto ainda nÃ£o propÃµe um controlador completo de prÃ³tese.
 
-## 5. Current status
+A etapa atual busca identificar e compreender quais caracterÃ­sticas do sinal possuem maior potencial para representar a intenÃ§Ã£o motora.
 
-Completed:
+## 5. Estado atual
 
-- full-dataset preprocessing;
-- 1007 movement recordings analyzed;
-- temporal RMS analysis;
-- Welch PSD analysis;
-- median-frequency extraction;
-- validation of movement frequency using kinematics;
-- participant-level repeated-measures statistics;
-- task comparison with Friedman and Kendall's W;
-- 0.50 vs 0.75 Hz comparison with paired Wilcoxon tests and Holm correction.
+ConcluÃ­do:
 
-In progress:
+- processamento completo das 1007 gravaÃ§Ãµes;
+- anÃ¡lise temporal com RMS;
+- anÃ¡lise espectral com PSD por Welch;
+- cÃ¡lculo da frequÃªncia mediana;
+- validaÃ§Ã£o da frequÃªncia de movimento pela cinemÃ¡tica;
+- estatÃ­stica em nÃ­vel de participante;
+- comparaÃ§Ã£o entre tarefas com Friedman e Kendall's W;
+- comparaÃ§Ã£o entre 0,50 Hz e 0,75 Hz com Wilcoxon pareado e correÃ§Ã£o de Holm.
 
-- spatial analysis across the 8 Ã— 8 EDC and FDS arrays;
-- systematic EMG-kinematic relationship analysis;
-- physiological interpretation supported by literature.
+Em andamento:
 
-Future work:
+- anÃ¡lise espacial das matrizes 8 Ã— 8 de EDC e FDS;
+- anÃ¡lise sistemÃ¡tica da relaÃ§Ã£o entre HD-sEMG e cinemÃ¡tica;
+- aprofundamento da interpretaÃ§Ã£o fisiolÃ³gica com literatura.
 
-- evaluate whether the identified features support movement classification;
-- investigate continuous estimation of finger kinematics from HD-sEMG;
-- assess robustness to movement speed;
-- explore implications for myoelectric prosthetic control.
+PrÃ³ximas etapas:
 
-## Repository structure
+- avaliar caracterÃ­sticas espaciais dos canais;
+- quantificar relaÃ§Ãµes entre ativaÃ§Ã£o muscular e Ã¢ngulos dos dedos;
+- avaliar se as caracterÃ­sticas identificadas permitem classificar os movimentos;
+- investigar estimativa contÃ­nua da cinemÃ¡tica;
+- analisar a robustez das caracterÃ­sticas Ã  velocidade de execuÃ§Ã£o;
+- discutir aplicaÃ§Ã£o futura em prÃ³teses mioelÃ©tricas.
+
+## Estrutura do repositÃ³rio
 
 ```text
 hdsemg-hand-movement-analysis/
@@ -355,17 +325,31 @@ hdsemg-hand-movement-analysis/
 +-- .gitignore
 ```
 
-## Reproducibility
+## Scripts principais
 
-Install dependencies with:
+### `01_preliminary_analysis.py`
+
+AnÃ¡lise exploratÃ³ria de uma gravaÃ§Ã£o, utilizada para inspecionar o HD-sEMG bruto, PSD, filtragem, RMS e relaÃ§Ãµes preliminares entre EMG e cinemÃ¡tica.
+
+### `02_full_dataset_analysis.py`
+
+Processa todas as gravaÃ§Ãµes vÃ¡lidas e extrai mÃ©tricas temporais, espectrais e cinemÃ¡ticas.
+
+### `03_analyze_results.py`
+
+Agrupa as repetiÃ§Ãµes em nÃ­vel de participante, executa a anÃ¡lise estatÃ­stica de medidas repetidas e gera as principais figuras.
+
+## Reprodutibilidade
+
+Instale as dependÃªncias com:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-The raw dataset is not redistributed in this repository because of its size.
+A base de dados bruta nÃ£o Ã© redistribuÃ­da neste repositÃ³rio devido ao seu tamanho.
 
-## Course
+## Disciplina
 
 IA753 â€” AnÃ¡lise de Sinais BiolÃ³gicos  
 FEEC â€” Universidade Estadual de Campinas
