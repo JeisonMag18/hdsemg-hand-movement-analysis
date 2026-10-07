@@ -1,0 +1,13 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.idea/
+
+Dataset/
+data/raw/
+
+results_test/
+results_full_dataset/
+
+*.zip
