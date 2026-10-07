@@ -1,4 +1,4 @@
-.venv/
+﻿.venv/
 venv/
 __pycache__/
 *.pyc
@@ -9,5 +9,10 @@ data/raw/
 
 results_test/
 results_full_dataset/
+analysis_results/
 
 *.zip
+*.log
+.DS_Store
+Thumbs.db
+README_backup_*.md
