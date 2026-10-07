@@ -114,26 +114,35 @@ Mais detalhes estão em [`docs/analysis_decisions.md`](docs/analysis_decisions.m
 
 ## Técnica principal de análise de sinais — PSD por Welch
 
-A técnica principal do trabalho é a **densidade espectral de potência (PSD)** estimada pelo método de Welch.
+A técnica principal de análise de sinais utilizada neste trabalho é a **densidade espectral de potência (PSD)**, estimada pelo método de Welch.
 
-O método divide o sinal em segmentos sobrepostos, aplica uma janela a cada segmento, estima seus periodogramas e realiza a média:
+O método de Welch divide o sinal em segmentos parcialmente sobrepostos, aplica uma janela a cada segmento, calcula o periodograma de cada trecho e, em seguida, realiza a média desses periodogramas:
 
-\[
-\hat{S}_{xx}(f)=\frac{1}{K}\sum_{k=1}^{K}P_k(f)
-\]
+$$
+\hat{S}_{xx}(f)
+=
+\frac{1}{K}
+\sum_{k=1}^{K} P_k(f)
+$$
 
-em que \(P_k(f)\) representa o periodograma do segmento \(k\).
+em que $P_k(f)$ representa o periodograma do segmento $k$ e $K$ corresponde ao número total de segmentos utilizados na estimativa.
 
-A partir da PSD também é calculada a frequência mediana, definida pela condição:
+A PSD permite analisar como a potência do sinal HD-sEMG está distribuída ao longo da frequência.
 
-\[
-\int_{f_{\min}}^{f_{\mathrm{med}}}S_{xx}(f)\,df
+A partir da PSD, também é calculada a **frequência mediana** ($f_{\mathrm{med}}$), definida como a frequência que divide a potência espectral analisada em duas partes iguais:
+
+$$
+\int_{f_{\min}}^{f_{\mathrm{med}}}
+S_{xx}(f)\,df
 =
 \frac{1}{2}
-\int_{f_{\min}}^{f_{\max}}S_{xx}(f)\,df
-\]
+\int_{f_{\min}}^{f_{\max}}
+S_{xx}(f)\,df
+$$
 
-O RMS é utilizado como uma análise temporal complementar.
+Neste trabalho, a PSD é utilizada para investigar diferenças espectrais entre os movimentos e entre as duas velocidades de execução, enquanto a frequência mediana é utilizada como uma característica resumida da distribuição espectral.
+
+O **RMS** é utilizado de forma complementar para caracterizar a amplitude temporal da ativação muscular.
 
 ## Análise estatística
 
