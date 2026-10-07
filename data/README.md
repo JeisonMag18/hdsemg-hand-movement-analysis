@@ -1,30 +1,30 @@
-﻿# Dataset
+# Base de dados
 
-The raw dataset is not redistributed in this repository because of its size.
+Os arquivos brutos da base de dados não são redistribuídos neste repositório devido ao tamanho do conjunto.
 
-Public dataset:
+Base pública utilizada:
 
-**HD sEMG of Forearm Muscles and 3D Hand Kinematics During
-Sinusoidally-Modulated Finger Movements and Grasping Tasks**
+**HD sEMG of Forearm Muscles and 3D Hand Kinematics During Sinusoidally-Modulated Finger Movements and Grasping Tasks**
 
 DOI:
 
 `10.6084/m9.figshare.31032934`
 
-## Expected local organization
+## Organização local esperada
 
 ```text
 Dataset/
-+-- Sub001/
-|   +-- HD_sEMG/
-|   +-- HandKinematics/
-|       +-- Angles/
-|       +-- Trajectories/
-+-- ...
-+-- Sub021/
+├── Sub001/
+│   ├── HD_sEMG/
+│   └── HandKinematics/
+│       ├── Angles/
+│       └── Trajectories/
+├── Sub002/
+│   └── ...
+├── ...
+└── Sub021/
 ```
 
-The analysis scripts expect the participant directories under a common dataset
-root supplied through command-line arguments.
+Os scripts de análise utilizam uma pasta raiz comum para localizar os diretórios de cada participante.
 
-The raw dataset should remain outside Git version control.
+A pasta contendo os dados brutos deve permanecer fora do controle de versão do Git.

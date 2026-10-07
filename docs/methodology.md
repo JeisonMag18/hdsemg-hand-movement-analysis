@@ -1,77 +1,114 @@
-﻿# Methodology
+# Metodologia
 
-## Objective
+## Objetivo
 
-The current objective is to characterize temporal, spectral and eventually
-spatial HD-sEMG features associated with different hand motor tasks.
+O objetivo atual é caracterizar propriedades temporais, espectrais e, posteriormente, espaciais do HD-sEMG associadas a diferentes movimentos da mão.
 
-The analysis is designed as a first step toward future estimation of motor
-intention for myoelectric prosthetic control.
+Esta etapa é pensada como base para um objetivo futuro: estimar a intenção motora a partir da atividade muscular, com possível aplicação em controle de próteses mioelétricas.
 
-## Dataset
+## Base de dados
 
-The dataset contains simultaneous HD-sEMG and hand kinematics from 21 healthy
-participants.
+A base contém registros simultâneos de HD-sEMG e cinemática da mão de 21 participantes saudáveis.
 
-Eight motor tasks were performed at 0.50 Hz and 0.75 Hz, with three repetitions
-per condition.
+Foram consideradas oito tarefas motoras, executadas nas frequências de 0,50 Hz e 0,75 Hz, com três repetições por condição.
 
-The HD-sEMG contains 128 channels:
+O HD-sEMG possui 128 canais:
 
-- 64 EDC channels;
-- 64 FDS channels.
+- canais 1–64: Extensor Digitorum Communis (EDC);
+- canais 65–128: Flexor Digitorum Superficialis (FDS).
 
-## Analysis interval
+A frequência de amostragem do HD-sEMG é 2052,52 Hz e a da cinemática é 100 Hz.
 
-The analysis uses the interval from 5 s to 40 s of each recording.
+## Intervalo de análise
 
-## Filtering
+Cada registro possui aproximadamente 45 s. Para a análise é utilizado o intervalo entre 5 s e 40 s.
 
-A fourth-order Butterworth high-pass filter with a 20 Hz cutoff is applied
-using zero-phase forward-backward filtering.
+Esse recorte mantém uma região central comum entre as gravações e reduz a influência do início e do final da aquisição.
 
-## Temporal analysis
+## Filtragem
 
-A sliding RMS with a 100 ms window is used to characterize HD-sEMG amplitude.
+É aplicado um filtro passa-altas Butterworth de quarta ordem com frequência de corte de 20 Hz.
 
-## Spectral analysis
+A filtragem é realizada em fase zero, utilizando processamento forward-backward.
 
-Power spectral density is estimated using Welch's method.
+A escolha de 20 Hz foi baseada em análises exploratórias do conteúdo espectral e na comparação entre cortes de 5, 10 e 20 Hz.
 
-A Hamming window, 2 s segments and 50% overlap are used in the current
-implementation.
+## Análise temporal
 
-The spectral analysis is the principal signal-analysis technique of the study.
+A amplitude do HD-sEMG é caracterizada por RMS móvel com janela de 100 ms.
 
-## Median frequency
+Para um sinal discreto \(x[n]\):
 
-Median frequency is calculated from the PSD as the frequency dividing the
-spectral power into two equal areas.
+\[
+RMS[n] =
+\sqrt{
+rac{1}{N}
+\sum_{k=0}^{N-1}x^2[n-k]
+}
+\]
 
-## Kinematic validation
+O RMS é utilizado como um descritor temporal complementar da ativação muscular.
 
-Hand-angle signals are analyzed with Welch PSD to estimate their dominant
-movement frequency.
+## Análise espectral
 
-The dominant frequency is compared with the nominal experimental frequencies
-of 0.50 Hz and 0.75 Hz.
+A densidade espectral de potência (PSD) é estimada pelo método de Welch.
 
-## Statistical analysis
+Na implementação atual são utilizados:
 
-The three repetitions are first averaged within each participant and
-experimental condition.
+- janela de Hamming;
+- segmentos de 2 s;
+- sobreposição de 50%.
 
-Comparisons among the eight tasks are performed with the Friedman test.
+A análise espectral por Welch é a principal técnica de análise de sinais utilizada nesta etapa do trabalho.
 
-Kendall's W is reported as an effect-size measure.
+## Frequência mediana
 
-Paired comparisons between 0.50 and 0.75 Hz are performed with the Wilcoxon
-signed-rank test, followed by Holm correction for multiple comparisons.
+A frequência mediana é calculada a partir da PSD e corresponde à frequência que divide a potência espectral em duas áreas iguais:
 
-## Interpretation strategy
+\[
+\int_{f_{\min}}^{f_{\mathrm{med}}}S_{xx}(f)\,df
+=
+rac{1}{2}
+\int_{f_{\min}}^{f_{\max}}S_{xx}(f)\,df
+\]
 
-Statistical significance is not treated as sufficient by itself.
+Ela é utilizada como um descritor compacto da distribuição espectral do HD-sEMG.
 
-Results are interpreted in terms of muscle activation demand, task-specific
-recruitment, spectral distribution, sensitivity to execution speed and
-potential usefulness for future movement-intention estimation.
+## Validação cinemática
+
+Os sinais de ângulo da mão são utilizados para verificar se os movimentos foram realizados próximos às frequências de 0,50 Hz e 0,75 Hz definidas no protocolo experimental.
+
+A frequência dominante da cinemática é estimada por PSD e comparada com a frequência nominal da tarefa.
+
+Nesta etapa, os ângulos ainda não são utilizados como alvo de regressão para estimativa contínua do movimento.
+
+## Análise estatística
+
+A unidade experimental é o participante.
+
+As três repetições são primeiro agregadas dentro de cada combinação:
+
+**participante × tarefa × frequência de execução**.
+
+Depois são aplicados:
+
+- teste de Friedman para comparar as oito tarefas;
+- W de Kendall como tamanho de efeito;
+- teste pareado de Wilcoxon para comparar 0,50 Hz e 0,75 Hz;
+- correção de Holm para múltiplas comparações.
+
+Esse procedimento evita tratar repetições do mesmo participante como observações independentes.
+
+## Estratégia de interpretação
+
+A significância estatística não é interpretada isoladamente.
+
+Os resultados são discutidos considerando:
+
+- nível de ativação muscular;
+- diferenças de recrutamento entre tarefas;
+- distribuição espectral;
+- influência da velocidade de execução;
+- possível utilidade futura para estimativa da intenção motora.
+
+O trabalho atual não demonstra ainda desempenho de classificação ou controle de prótese. Essas etapas são tratadas como desenvolvimento futuro.
